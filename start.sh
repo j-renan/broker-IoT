@@ -9,7 +9,11 @@ mosquitto_passwd -b -c \
   "$MQTT_USERNAME" \
   "$MQTT_PASSWORD"
 
+chown mosquitto:mosquitto /mosquitto/config/passwd
 chmod 600 /mosquitto/config/passwd
+
+echo "Arquivo passwd:"
+ls -l /mosquitto/config/passwd
 
 echo "Iniciando Mosquitto..."
 
