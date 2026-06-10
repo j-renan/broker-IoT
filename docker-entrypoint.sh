@@ -2,16 +2,17 @@
 
 set -e
 
-if [ -z "$MQTT_USERNAME" ] || [ -z "$MQTT_PASSWORD" ]; then
-  echo "MQTT_USERNAME e MQTT_PASSWORD são obrigatórios."
-  exit 1
-fi
-
 mkdir -p /mosquitto/config
 
 mosquitto_passwd -b -c \
   /mosquitto/config/passwd \
   "$MQTT_USERNAME" \
   "$MQTT_PASSWORD"
+
+chown mosquitto:mosquitto /mosquitto/config/passwd
+chmod 600 /mosquitto/config/passwd
+
+echo "Arquivo passwd:"
+ls -l /mosquitto/config/passwd
 
 exec mosquitto -c /mosquitto/config/mosquitto.conf
